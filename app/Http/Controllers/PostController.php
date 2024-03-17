@@ -25,17 +25,18 @@ class PostController extends Controller
      * Posts a new post to store
      * 
      * @param App\Http\Requests\StorePostRequest
-     * @return \Illuminate\Http\JsonResponse Returns a JSON response containing all posts
+     * @return \Illuminate\Http\JsonResponse Returns a JSON response containing specific 
      */
     public function store(StorePostRequest $request)
     {
-        // $data = $request->all();
-        // $post = Post::create([
-        //     'title' => $data['title'],
-        //     'content' => $data['content'],
-        // ]);
+        $data = $request->all();
+        $post = Post::create([
+            'title' => $data['title'],
+            'content' => $data['content'],
+        ]);
 
         return response()->json([
+            'data'=>$post,
             'message' => 'Post created successfully',
         ], 201);
     }
@@ -71,7 +72,9 @@ class PostController extends Controller
         }
         $postData = $request->only('title', 'content');
         $post->update($postData);
-        return response()->json(['data' => $post, 'message' => 'Successfully updated']);
+        return response()->json([
+            'data' => $post,
+            'message' => 'Successfully updated']);
     }
 
    /**

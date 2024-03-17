@@ -24,8 +24,8 @@ class UpdatePostRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => ['sometimes|string'],
-            'content' => ['sometimes|string'],
+            'title' => 'sometimes|string',
+            'content' => 'sometimes|string',
         ];    
     }
 }

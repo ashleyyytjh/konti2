@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\JsonResponse;
 
 class StorePostRequest extends FormRequest
 {
@@ -24,8 +25,9 @@ class StorePostRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|string',
-            'content' => 'required|string',
+            'title' => ['required','string'],
+            'content' => ['required','string'],
         ];
     }
+    
 }

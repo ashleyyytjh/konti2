@@ -7,10 +7,13 @@ use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use Illuminate\Http\Request;
 
+
 class PostController extends Controller
 {
     /**
      * Displays all posts available by id, title and content
+     * 
+     * @return \Illuminate\Http\JsonResponse Returns a JSON response containing all posts
      */
     public function index()
     {
@@ -20,14 +23,17 @@ class PostController extends Controller
 
     /**
      * Posts a new post to store
+     * 
+     * @param App\Http\Requests\StorePostRequest
+     * @return \Illuminate\Http\JsonResponse Returns a JSON response containing all posts
      */
     public function store(StorePostRequest $request)
     {
-        $data = $request->json()->all();
-        $post = Post::create([
-            'title' => $data['title'],
-            'content' => $data['content'],
-        ]);
+        // $data = $request->all();
+        // $post = Post::create([
+        //     'title' => $data['title'],
+        //     'content' => $data['content'],
+        // ]);
 
         return response()->json([
             'message' => 'Post created successfully',
@@ -35,7 +41,10 @@ class PostController extends Controller
     }
 
     /**
-     * Displays a specific post given by url
+     * Displays a specific post given by URL.
+     *
+     * @param  int $id The ID of the post to retrieve.
+     * @return \Illuminate\Http\JsonResponse Returns the post data as JSON if found; otherwise, returns a JSON error message.
      */
     public function show($id)
     {
@@ -48,7 +57,11 @@ class PostController extends Controller
 
 
     /**
-     * Updates the specific post id 
+     * Updates the specific post by ID.
+     *
+     * @param  UpdatePostRequest $request The form request that validates the incoming data.
+     * @param  int $id The ID of the post to update.
+     * @return \Illuminate\Http\JsonResponse Returns a JSON response with the updated post data and a success message if the update is successful; otherwise, returns a JSON error message.
      */
     public function update(UpdatePostRequest $request, $id)
     {
@@ -56,14 +69,16 @@ class PostController extends Controller
         if (!$post) {
             return response()->json(['message'=> 'No such id'],404);
         }
-        //i only want to update title and content
         $postData = $request->only('title', 'content');
         $post->update($postData);
-        return response() ->json(['message','Successfully updated']);
+        return response()->json(['data' => $post, 'message' => 'Successfully updated']);
     }
 
-    /**
-     * Removes a specific post by id
+   /**
+     * Removes a specific post by ID.
+     *
+     * @param  int $id The ID of the post to be deleted.
+     * @return \Illuminate\Http\JsonResponse Returns a JSON message confirming deletion if successful; otherwise, returns a JSON error message.
      */
     public function destroy($id)
     {

@@ -17,15 +17,15 @@ class UpdatePostRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * Validation rules
      *
      * @return array
      */
     public function rules()
     {
         return [
-            'title' => 'sometimes|string',
-            'content' => 'sometimes|string',
+            'title' => ['sometimes|string'],
+            'content' => ['sometimes|string'],
         ];    
     }
 }
